@@ -1,29 +1,26 @@
 import Layout from "@/components/layout";
 import apiClient from "@/lib/api/api-client";
-import { CurrentUser } from "@/lib/current-user";
+import { Poll, PollStatus } from "@/lib/api/types";
 
 type Props = {
-  user?: CurrentUser | null;
+  polls: Poll[];
 };
 
-export default function Home({ user }: Props) {
-  console.log("getStaticProps", typeof window);
+export default function Home({ polls }: Props) {
   return (
     <Layout>
       <h1>Home</h1>
-      <p>user: {user ? "aha" : "no"}</p>
+      <p>polls: {polls.length}</p>
     </Layout>
   );
 }
 
-export async function getServerSideProps() {
-  console.log("getStaticProps", typeof window);
-  const user = await apiClient.me();
+export async function getStaticProps() {
+  const polls = await apiClient.pollList(PollStatus.ACTIVE, 10);
   return {
     props: {
-      user,
+      polls,
     },
+    revalidate: 60,
   };
 }
-
-export const revalidate = 3600;

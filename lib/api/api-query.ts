@@ -11,6 +11,7 @@ export const FIND_POLLS_QUERY = (
     title
     description
     status
+    slug
     type
     imageId
     votesCount

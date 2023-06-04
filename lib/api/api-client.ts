@@ -13,9 +13,8 @@ async function pollList(
   limit: number = 10,
   offset: number = 0,
 ): Promise<Poll[]> {
-  const data = await apiFetcher<{ findPollList: Poll[] }>(
-    FIND_POLLS_QUERY(status, limit, offset),
-  );
+  const query = FIND_POLLS_QUERY(status, limit, offset);
+  const data = await apiFetcher<{ findPollList: Poll[] }>(query);
 
   return data.findPollList;
 }

@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
-    "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
+    "format": "prettier \"lib/*.{css,js,json,jsx,ts,tsx}\"",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-locales": "localizy -d locales -o lib/generated-locales.ts"
   },
   "dependencies": {
     "@radix-ui/react-popover": "^1.0.2",
@@ -23,6 +24,7 @@
     "eslint-config-next": "13.1.1",
     "focus-trap-react": "^10.0.2",
     "framer-motion": "^10.11.2",
+    "localizy": "^0.1.6",
     "ms": "^2.1.3",
     "next": "13.3.0",
     "react": "18.2.0",

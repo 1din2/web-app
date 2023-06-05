@@ -1,11 +1,11 @@
 import Layout from "@/components/layout";
-import PollListItem from "@/components/polls/poll-list-item";
+import PollList from "@/components/polls/poll-list";
 import { Twitter } from "@/components/shared/icons";
 import Tooltip from "@/components/shared/tooltip";
 import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
 
 type Props = {
@@ -13,20 +13,7 @@ type Props = {
 };
 
 export default function Home({ polls }: Props) {
-  const Items = (
-    <AnimatePresence>
-      {polls.map((item) => (
-        <motion.div className="group bg-white relative mx-auto mt-10 h-[250px] w-full overflow-hidden rounded-2xl border border-gray-200 sm:h-[400px] sm:w-[600px]"
-          key={item.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <PollListItem item={item} />
-        </motion.div>
-      ))}
-    </AnimatePresence>
-  );
+  const Items = <PollList list={polls} />;
 
   return (
     <Layout>
@@ -101,7 +88,10 @@ export default function Home({ polls }: Props) {
 }
 
 export async function getStaticProps() {
-  const polls = await apiClient.pollList(PollStatus.DRAFT, 10);
+  const polls = await apiClient.pollList({
+    status: PollStatus.DRAFT,
+    limit: 10,
+  });
 
   return {
     props: {

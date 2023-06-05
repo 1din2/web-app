@@ -2125,6 +2125,14 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
+localizy@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/localizy/-/localizy-0.1.6.tgz#97dd4f123781c0c33786caf25aab0a84a590de6a"
+  integrity sha512-fJn0OP03kavzzI57orzEyc1uqxvX8CGV3h3pCGHBlbm41+vztSm4mb6Y4DRK2Korfhq2fwiqencLU1/ZP+Jpaw==
+  dependencies:
+    sprintf-js "^1.1.1"
+    sprintf-ts "^0.1.0"
+
 locate-path@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-6.0.0.tgz#55321eb309febbc59c4801d931a72452a681d286"
@@ -2837,6 +2845,16 @@ spawn-command@^0.0.2-1:
   version "0.0.2-1"
   resolved "https://registry.yarnpkg.com/spawn-command/-/spawn-command-0.0.2-1.tgz#62f5e9466981c1b796dc5929937e11c9c6921bd0"
   integrity sha512-n98l9E2RMSJ9ON1AKisHzz7V42VDiBQGY6PB1BwRglz99wpVsSuGzQ+jOi6lFXBGVTCrRpltvjm+/XA+tpeJrg==
+
+sprintf-js@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.1.2.tgz#da1765262bf8c0f571749f2ad6c26300207ae673"
+  integrity sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
+
+sprintf-ts@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/sprintf-ts/-/sprintf-ts-0.1.0.tgz#7ed0a0848574f649ea7b00af452f4540668d163b"
+  integrity sha512-Yv65oNMYoZjQ7cA+f3LdyDNiwiPbbqhEEYHC7zBTPtXI9prJW6dl0qbdnVY0q3RnJRC7+rrMw6I3SElsIBQo5Q==
 
 stop-iteration-iterator@^1.0.0:
   version "1.0.0"

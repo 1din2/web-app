@@ -44,3 +44,8 @@ export interface Poll extends BaseEntity {
   votesCount: number;
   options?: PollOption[];
 }
+
+export interface Tag extends BaseEntity {
+  name: string;
+  slug: string;
+}

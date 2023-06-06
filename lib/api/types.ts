@@ -1,7 +1,7 @@
 export interface BaseEntity {
   id: string;
-  createdAt: number;
-  updatedAt?: number;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface PublicUser extends BaseEntity {
@@ -40,9 +40,10 @@ export interface Poll extends BaseEntity {
   minSelect: number;
   maxSelect: number;
   language: string;
-  endsAt: number;
+  endsAt: string;
   votesCount: number;
   options?: PollOption[];
+  tags?: Tag[];
 }
 
 export interface Tag extends BaseEntity {

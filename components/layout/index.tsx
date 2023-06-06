@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import useScroll from "@/lib/hooks/use-scroll";
 import Meta from "./meta";
 import { Github } from "../shared/icons";
+import { useLoginModal, LoginModalContext } from "../home/login-modal";
 
 export default function Layout({
   meta,
@@ -17,10 +18,12 @@ export default function Layout({
   children: ReactNode;
 }) {
   const scrolled = useScroll(50);
+  const { LoginModal, setShowLoginModal } = useLoginModal();
 
   return (
     <>
       <Meta {...meta} />
+      <LoginModal />
       <div className="fixed h-screen w-full bg-gradient-to-br from-emerald-100 via-blue-50 to-rose-100" />
       <div
         className={`fixed top-0 w-full ${
@@ -67,8 +70,10 @@ export default function Layout({
           </div>
         </div>
       </div>
-      <main className="flex min-h-screen w-full flex-col items-center justify-center py-32">
-        {children}
+      <main className="flex min-h-screen w-full flex-col items-center justify-center py-24">
+        <LoginModalContext.Provider value={{ setShowLoginModal }}>
+          {children}
+        </LoginModalContext.Provider>
       </main>
       <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center">
         <p className="text-gray-500">

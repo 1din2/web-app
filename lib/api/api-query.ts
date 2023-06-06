@@ -9,24 +9,15 @@ export type FindPollVariables = {
   tag?: string;
 };
 
+const POLL_FIELDS = `id title description status slug type imageId votesCount tags {slug name}`;
+const POLL_OPTION_FIELDS = `id imageId title description votesCount`;
+const POLL_VOTE_FIELDS = `pollId pollOptionId`;
+
 export const FIND_POLLS_QUERY =
   () => `query FindPollList($status: [PollStatus!], $limit: Int, $offset: Int, $tag: String) {
   findPollList(status: $status, limit: $limit, offset: $offset, tag: $tag) {
-    id
-    title
-    description
-    status
-    slug
-    type
-    imageId
-    votesCount
-    options {
-      id
-      imageId
-      title
-      description
-      votesCount
-    }
+    ${POLL_FIELDS}
+    options {${POLL_OPTION_FIELDS}}
   }
 }`;
 
@@ -45,4 +36,16 @@ export const TAG_BY_SLUG_QUERY =
   () => `query TagBySlug($slug: String!, $lang: String) {
   tagBySlug(slug: $slug, lang: $lang)
   {id slug name}
+}`;
+
+export type PollBySlugVariables = {
+  slug: string;
+};
+
+export const POLL_BY_SLUG_QUERY = () => `query PollBySlug($slug: String!) {
+  pollBySlug(slug: $slug) {
+    ${POLL_FIELDS}
+    userVotes {${POLL_VOTE_FIELDS}}
+    options {${POLL_OPTION_FIELDS}}
+  }
 }`;

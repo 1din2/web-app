@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 
 const clash = localFont({
-  src: "../styles/ClashDisplay-Semibold.otf",
+  src: "../styles/BreeSerif-Regular.ttf",
   variable: "--font-clash",
 });
 

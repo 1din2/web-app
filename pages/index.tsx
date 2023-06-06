@@ -90,7 +90,7 @@ export default function Home({ polls }: Props) {
 export async function getStaticProps() {
   const polls = await apiClient.pollList({
     status: PollStatus.DRAFT,
-    limit: 10,
+    limit: 5,
   });
 
   return {

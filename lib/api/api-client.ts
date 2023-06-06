@@ -3,6 +3,8 @@ import {
   FIND_POLLS_QUERY,
   FindPollVariables,
   ME_QUERY,
+  POLL_BY_SLUG_QUERY,
+  PollBySlugVariables,
   TAG_BY_SLUG_QUERY,
   TagBySlugVariables,
 } from "./api-query";
@@ -28,10 +30,20 @@ async function tagBySlug(variables: TagBySlugVariables): Promise<Tag | null> {
   return data.tagBySlug;
 }
 
+async function pollBySlug(
+  variables: PollBySlugVariables,
+): Promise<Poll | null> {
+  const query = POLL_BY_SLUG_QUERY();
+  const data = await apiFetcher<{ pollBySlug: Poll | null }>(query, variables);
+
+  return data.pollBySlug;
+}
+
 const ApiClient = {
   me,
   pollList,
   tagBySlug,
+  pollBySlug,
 };
 
 export default ApiClient;

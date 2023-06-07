@@ -9,8 +9,9 @@ export type FindPollVariables = {
   tag?: string;
 };
 
+const IMAGE_FIELDS = `id url`;
 const POLL_FIELDS = `id title description status slug type imageId votesCount tags {slug name}`;
-const POLL_OPTION_FIELDS = `id imageId title description votesCount`;
+const POLL_OPTION_FIELDS = `id imageId title description votesCount image{${IMAGE_FIELDS}}`;
 const POLL_VOTE_FIELDS = `pollId pollOptionId`;
 
 export const FIND_POLLS_QUERY =
@@ -51,8 +52,8 @@ export const POLL_BY_SLUG_QUERY = () => `query PollBySlug($slug: String!) {
 }`;
 
 export type VoteVariables = {
-  pollOptionIds:string[];
-}
+  pollOptionIds: string[];
+};
 
 export const VOTE_MUTATION = `mutation Vote($pollOptionIds: [ID!]!) {
   vote(pollOptionIds: $pollOptionIds) {

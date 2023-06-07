@@ -23,11 +23,16 @@ export enum PollType {
   SELECT = "SELECT",
 }
 
+export interface Image extends BaseEntity {
+  url?: string;
+}
+
 export interface PollOption extends BaseEntity {
   title: string;
   description?: string;
   imageId?: string;
   votesCount: number;
+  image?: Image;
 }
 
 export interface PollVote {

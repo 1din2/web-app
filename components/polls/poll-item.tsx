@@ -9,6 +9,7 @@ import { LoginModalContext } from "../home/login-modal";
 import CheckCircle from "../shared/icons/check-circle";
 import apiClient from "@/lib/api/api-client";
 import { LoadingDots } from "../shared/icons";
+import Image from "next/image";
 
 // const MAP_IDS: Record<string, string> = {};
 
@@ -76,24 +77,52 @@ export default function PollItem({
     return (
       <div
         key={option.id}
-        className={`group relative flex flex-1 flex-col items-center overflow-hidden p-4 first:border-b md:first:border-r text-center${
+        className={`group relative flex flex-1 flex-col items-center overflow-hidden first:border-b md:first:border-r text-center${
           isSelected ? " is-selected" : ""
         }${canVote ? " can-vote" : ""}`}
         onClick={canVote ? (e) => onClickOption(e as never, option) : undefined}
       >
-        <div className="grow-[1] overflow-hidden">
-          <div className="mb-1 text-lg font-semibold">{option.title}</div>
+        <div className="w-full flex-col overflow-hidden bg-slate-400 bg-opacity-25 p-2">
+          <div className="mb-1 text-lg font-semibold drop-shadow">
+            {option.title}
+          </div>
           <div className="whitespace-nowrap text-xs">{option.description}</div>
         </div>
-        <div className="grow-[6]"></div>
-        <div className="grow-0">
-          <div className="mb-1 text-lg font-semibold">{option.votesCount}</div>
+        <div className="flex-col overflow-hidden flex-1 w-full relative">
+          {option.image?.url && (
+            <Image
+              src={option.image.url}
+              alt={option.title}
+              width={500}
+              height={500}
+              fill={true}
+              className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
+            />
+          )}
+          <Image
+            src="https://storage.agora.md/api/v1/t/0f72916c7469b1ab500ddba7c24c4a695a8bf928/public/fit_1280"
+            alt={option.title}
+            // width={500}
+            // height={500}
+            fill={true}
+            // objectFit="cover"
+            style={{ objectFit: "cover" }}
+            // className="absolute top-0 left-0 w-full h-full"
+            // className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
+            className="flex-none"
+          />
+          <div className="absolute top-0 h-full w-full bg-gradient-to-b from-transparent to-black" />
+          <div className="absolute bottom-2 block w-full">
+            <div className="p-2 mb-1 text-lg font-semibold text-white m-auto">
+              {option.votesCount}
+            </div>
+          </div>
+          <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-25 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" />
+          {voting && <LoadingDots color="text-sky-600" />}
+          {!voting && (
+            <CheckCircle className="group-[.can-vote]-hover:text-sky-600 absolute left-1/2 top-1/2 mx-auto h-10 w-10 -translate-x-1/2 -translate-y-1/2 text-white opacity-50 transition-colors group-[.is-selected]:text-sky-600" />
+          )}
         </div>
-        <div className="absolute top-0 h-full w-full group-[.can-vote]:cursor-pointer bg-black opacity-5 transition-opacity group-[.can-vote]-hover:opacity-0 group-[.is-selected]:opacity-0" />
-        {voting && <LoadingDots color="text-sky-600" />}
-        {!voting && (
-          <CheckCircle className="absolute left-1/2 top-1/2 mx-auto h-10 w-10 -translate-x-1/2 -translate-y-1/2 text-white opacity-50 transition-colors group-[.can-vote]-hover:text-sky-600 group-[.is-selected]:text-sky-600" />
-        )}
       </div>
     );
   };

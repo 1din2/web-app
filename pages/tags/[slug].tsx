@@ -4,6 +4,7 @@ import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus, Tag } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
 import locales from "@/lib/locales";
+import getUserTokenServer from "@/lib/user-token-server";
 import { motion } from "framer-motion";
 import { GetStaticPropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -58,10 +59,11 @@ export const getStaticProps = async (
   context: GetStaticPropsContext & { params: Params },
 ) => {
   const { slug } = context.params;
+  const client = apiClient();
   const [tag, polls] = await Promise.all([
-    apiClient.tagBySlug({ slug }),
-    apiClient.pollList({
-      status: PollStatus.DRAFT,
+    client.tagBySlug({ slug }),
+    client.pollList({
+      // status: PollStatus.DRAFT,
       limit: 10,
       tag: slug,
     }),

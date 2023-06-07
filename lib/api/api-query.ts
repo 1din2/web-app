@@ -3,7 +3,7 @@ import { PollStatus } from "./types";
 export const ME_QUERY = `{me{id displayName createdAt}}`;
 
 export type FindPollVariables = {
-  status: PollStatus;
+  status?: PollStatus[];
   limit?: number;
   offset?: number;
   tag?: string;
@@ -44,6 +44,18 @@ export type PollBySlugVariables = {
 
 export const POLL_BY_SLUG_QUERY = () => `query PollBySlug($slug: String!) {
   pollBySlug(slug: $slug) {
+    ${POLL_FIELDS}
+    userVotes {${POLL_VOTE_FIELDS}}
+    options {${POLL_OPTION_FIELDS}}
+  }
+}`;
+
+export type VoteVariables = {
+  pollOptionIds:string[];
+}
+
+export const VOTE_MUTATION = `mutation Vote($pollOptionIds: [ID!]!) {
+  vote(pollOptionIds: $pollOptionIds) {
     ${POLL_FIELDS}
     userVotes {${POLL_VOTE_FIELDS}}
     options {${POLL_OPTION_FIELDS}}

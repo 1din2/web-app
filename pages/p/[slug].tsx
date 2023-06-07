@@ -1,4 +1,5 @@
 import Layout from "@/components/layout";
+import PollItem from "@/components/polls/poll-item";
 import PollList from "@/components/polls/poll-list";
 import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus } from "@/lib/api/types";
@@ -31,7 +32,8 @@ export default function PollPage({ poll, latest }: Props) {
           },
         }}
       >
-        {Items}
+        <PollItem item={poll} active={true} />
+        {/* {Items} */}
       </motion.div>
     </Layout>
   );
@@ -52,10 +54,11 @@ export const getStaticProps = async (
   context: GetStaticPropsContext & { params: Params },
 ): Promise<GetStaticPropsResult<Props>> => {
   const { slug } = context.params;
+  const client = apiClient();
   const [poll, latest] = await Promise.all([
-    apiClient.pollBySlug({ slug }),
-    apiClient.pollList({
-      status: PollStatus.DRAFT,
+    client.pollBySlug({ slug }),
+    client.pollList({
+      // status: PollStatus.DRAFT,
       limit: 10,
     }),
   ]);

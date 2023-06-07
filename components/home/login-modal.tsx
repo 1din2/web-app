@@ -11,7 +11,6 @@ import {
 import { FADE_DOWN_ANIMATION_VARIANTS, PROJECT_ID } from "@/lib/constants";
 import { saveCurrentUserToken } from "@/lib/current-user";
 import { motion } from "framer-motion";
-import Twitter from "../shared/icons/twitter";
 import Facebook from "../shared/icons/facebook";
 import Google from "../shared/icons/google";
 
@@ -24,8 +23,6 @@ const LoginModal = ({
   showLoginModal: boolean;
   setShowLoginModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [saving, setSaving] = useState(false);
-
   const onLogin = (event: any) => {
     console.log(event);
     const { data } = event;
@@ -126,7 +123,10 @@ export function useLoginModal() {
   }, [showLoginModal, setShowLoginModal]);
 
   return useMemo(
-    () => ({ setShowLoginModal, LoginModal: LoginModalCallback }),
+    () => ({
+      setShowLoginModal,
+      LoginModal: LoginModalCallback,
+    }),
     [LoginModalCallback],
   );
 }

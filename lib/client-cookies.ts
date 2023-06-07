@@ -28,7 +28,11 @@ function init(
   defaultAttributes: any,
 ): {
   get: (name: string) => string | undefined;
-  set: (name: string, value: string, attributes?: { expires?: number }) => void;
+  set: (
+    name: string,
+    value: string,
+    attributes?: { expires?: number; path?: string },
+  ) => void;
 } {
   function set(name: string, value: string, attributes: any) {
     if (typeof document === "undefined") {

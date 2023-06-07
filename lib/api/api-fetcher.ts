@@ -1,11 +1,11 @@
 import { API_URL, PROJECT_ID, LANG } from "../constants";
 import { getCurrentUser } from "../current-user";
 
-export default async function apiFetcher<T>(
+const apiFetcher = async <T>(
   query: string,
   variables = {},
-): Promise<T> {
-  const { token } = getCurrentUser() || {};
+  token: string = getCurrentUser()?.token || "",
+): Promise<T> => {
   const url = API_URL;
   const response = await fetch(url, {
     method: "POST",
@@ -23,4 +23,6 @@ export default async function apiFetcher<T>(
   if (json.errors?.length) throw json.errors[0];
 
   return json.data;
-}
+};
+
+export default apiFetcher;

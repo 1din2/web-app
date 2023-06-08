@@ -26,6 +26,7 @@ export default function PollPage({ poll, latest }: Props) {
       name1: options[0]?.title || "1",
       name2: options[1]?.title || "2",
     })}? ${poll.description || ""}`.trim(),
+    image: links.pollSocialImage(poll.slug),
   };
 
   return (

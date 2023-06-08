@@ -1,10 +1,11 @@
 import Layout from "@/components/layout";
+import { MetaData } from "@/components/layout/meta";
 import PollList from "@/components/polls/poll-list";
 import { Twitter } from "@/components/shared/icons";
 import Tooltip from "@/components/shared/tooltip";
 import apiClient from "@/lib/api/api-client";
-import { Poll, PollStatus } from "@/lib/api/types";
-import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
+import { Poll } from "@/lib/api/types";
+import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
 
@@ -14,9 +15,12 @@ type Props = {
 
 export default function Home({ polls }: Props) {
   const Items = <PollList list={polls} />;
+  const meta: MetaData = {
+    canonical: ROOT_URL,
+  };
 
   return (
-    <Layout>
+    <Layout meta={meta}>
       <motion.div
         className="z-10 max-w-2xl px-5 xl:px-0"
         initial="hidden"

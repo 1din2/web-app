@@ -25,6 +25,11 @@ const LoginModal = ({
 }) => {
   const onLogin = (event: any) => {
     console.log(event);
+    if (
+      event.origin !== "http://localhost:42123" &&
+      event.origin !== "https://api.1of2.net"
+    )
+      return;
     const { data } = event;
     if (data && data.token) {
       saveCurrentUserToken(data.token);

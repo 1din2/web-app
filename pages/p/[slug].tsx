@@ -1,8 +1,11 @@
 import Layout from "@/components/layout";
+import { MetaData } from "@/components/layout/meta";
 import PollItem from "@/components/polls/poll-item";
 import PollList from "@/components/polls/poll-list";
 import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus } from "@/lib/api/types";
+import { ROOT_URL } from "@/lib/constants";
+import links from "@/lib/links";
 import { motion } from "framer-motion";
 import { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -14,9 +17,12 @@ type Props = {
 
 export default function PollPage({ poll, latest }: Props) {
   const Items = <PollList list={latest} />;
+  const meta: MetaData = {
+    canonical: `${ROOT_URL}${links.poll(poll.slug)}`,
+  };
 
   return (
-    <Layout>
+    <Layout meta={meta}>
       <motion.div
         className="z-10 max-w-2xl px-5 xl:px-0"
         initial="hidden"

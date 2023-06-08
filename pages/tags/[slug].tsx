@@ -1,10 +1,11 @@
 import Layout from "@/components/layout";
+import { MetaData } from "@/components/layout/meta";
 import PollList from "@/components/polls/poll-list";
 import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus, Tag } from "@/lib/api/types";
-import { FADE_DOWN_ANIMATION_VARIANTS } from "@/lib/constants";
+import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
+import links from "@/lib/links";
 import locales from "@/lib/locales";
-import getUserTokenServer from "@/lib/user-token-server";
 import { motion } from "framer-motion";
 import { GetStaticPropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -12,9 +13,12 @@ import Balancer from "react-wrap-balancer";
 
 export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
   const Items = <PollList list={polls} />;
+  const meta: MetaData = {
+    canonical: `${ROOT_URL}${links.tag(tag.slug)}`,
+  };
 
   return (
-    <Layout>
+    <Layout meta={meta}>
       <motion.div
         className="z-10 max-w-2xl px-5 xl:px-0"
         initial="hidden"

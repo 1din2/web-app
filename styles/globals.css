@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .link {
-  @apply font-semibold text-gray-600 transition-colors hover:text-black;
+  @apply text-gray-600 transition-colors hover:text-black;
 }

@@ -20,6 +20,7 @@ export const LANG = process.env.NEXT_PUBLIC_LANG || "";
 export const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN || "";
 export const ROOT_URL = process.env.NEXT_PUBLIC_ROOT_URL || "";
 export const FACEBOOK_APP_ID = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || "";
+export const FROM_EMAIL = process.env.NEXT_PUBLIC_FROM_EMAIL || "";
 
 if (!PROJECT_ID) throw new Error("Project ID not set in .env");
 if (!API_URL) throw new Error("API URL not set in .env");
@@ -27,3 +28,4 @@ if (!LANG) throw new Error("LANG not set in .env");
 if (!DOMAIN) throw new Error("DOMAIN not set in .env");
 if (!ROOT_URL) throw new Error("ROOT_URL not set in .env");
 if (!FACEBOOK_APP_ID) throw new Error("FACEBOOK_APP_ID not set in .env");
+if (!FROM_EMAIL) throw new Error("FROM_EMAIL not set in .env");

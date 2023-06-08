@@ -1,4 +1,5 @@
 import { DOMAIN, ROOT_URL } from "@/lib/constants";
+import locales from "@/lib/locales";
 import Head from "next/head";
 
 export type MetaData = {
@@ -9,8 +10,8 @@ export type MetaData = {
 };
 
 export default function Meta({
-  title = "Extrapolate - Transform your face with Artificial Intelligence",
-  description = "Extrapolate is an app for you to see how well you age by transforming your face with Artificial Intelligence. 100% free and privacy friendly.",
+  title = locales.index_title(),
+  description = locales.index_description(),
   image = `${ROOT_URL}/api/og`,
   canonical,
 }: MetaData) {

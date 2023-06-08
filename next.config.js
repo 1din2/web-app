@@ -3,13 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["1din2.ro"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "storage.agora.md",
-      },
-    ],
+    domains: ["1din2.ro", "storage.agora.md"],
   },
   async redirects() {
     return [

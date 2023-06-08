@@ -15,8 +15,9 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
-import { FACEBOOK_APP_ID } from "@/lib/constants";
+import { FACEBOOK_APP_ID, FROM_EMAIL } from "@/lib/constants";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
+import locales from "@/lib/locales";
 
 export default function Layout({
   meta,
@@ -51,25 +52,29 @@ export default function Layout({
               height="30"
               className="mr-2 rounded-sm"
             ></Image>
-            <p>Extrapolate</p>
+            <p>{locales.logo_name()}</p>
           </Link>
           <div className="flex items-center space-x-4">
             <FacebookShareButton url={meta.canonical}>
-              <FacebookIcon size={32} className="rounded" />
+              <FacebookIcon size={32} className="rounded-full" />
             </FacebookShareButton>
             <FacebookMessengerShareButton
               url={meta.canonical}
               appId={FACEBOOK_APP_ID}
             >
-              <FacebookMessengerIcon size={32} className="rounded" />
+              <FacebookMessengerIcon size={32} className="rounded-full" />
             </FacebookMessengerShareButton>
             <TwitterShareButton url={meta.canonical}>
-              <TwitterIcon size={32} className="rounded" />
+              <TwitterIcon size={32} className="rounded-full" />
             </TwitterShareButton>
-            <EmailShareButton url={meta.canonical}>
-              <EmailIcon size={32} className="rounded" />
+            <EmailShareButton
+              url={meta.canonical}
+              form={FROM_EMAIL}
+              title={meta.title}
+            >
+              <EmailIcon size={32} className="rounded-full" />
             </EmailShareButton>
-            <a
+            {/* <a
               href="https://vercel.com/templates/next.js/extrapolate"
               target="_blank"
               rel="noopener noreferrer"
@@ -91,7 +96,7 @@ export default function Layout({
               rel="noopener noreferrer"
             >
               <Github />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import locales from "@/lib/locales";
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 
@@ -14,7 +15,7 @@ export default async function handler(req: NextRequest) {
   const [clashData] = await Promise.all([clash]);
 
   const { searchParams } = req.nextUrl;
-  const title = searchParams.get("title") || "Extrapolate";
+  const title = searchParams.get("title") || locales.logo_name();
 
   return new ImageResponse(
     (
@@ -33,7 +34,7 @@ export default async function handler(req: NextRequest) {
       >
         <img
           src={new URL("../../public/logo.png", import.meta.url).toString()}
-          alt="Extrapolate Logo"
+          alt="1of2 Logo"
           tw="w-20 h-20 mb-4 opacity-95"
         />
         <h1

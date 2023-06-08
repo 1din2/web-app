@@ -1,4 +1,9 @@
 {
+  "logo_name": "1din2.ro",
+  "index_title": "Alege una din două - 1din2.ro",
+  "index_description": "Alege una din două: bătălii inteligente până la stupid.",
   "tag_page_title_format": "%(name)s - întrebări",
-  "latest_polls": "Întrebări noi"
+  "latest_polls": "Întrebări noi",
+  "share_poll_info": "Să vedem ce părere au și prietenii tăi!",
+  "name1_or_name2": "%(name1)s sau %(name2)s"
 }

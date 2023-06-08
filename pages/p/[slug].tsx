@@ -6,6 +6,7 @@ import apiClient from "@/lib/api/api-client";
 import { Poll, PollStatus } from "@/lib/api/types";
 import { ROOT_URL } from "@/lib/constants";
 import links from "@/lib/links";
+import locales from "@/lib/locales";
 import { motion } from "framer-motion";
 import { GetStaticPropsContext, GetStaticPropsResult } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -17,8 +18,14 @@ type Props = {
 
 export default function PollPage({ poll, latest }: Props) {
   const Items = <PollList list={latest} />;
+  const options = poll.options || [];
   const meta: MetaData = {
     canonical: `${ROOT_URL}${links.poll(poll.slug)}`,
+    title: poll.title,
+    description: `${locales.name1_or_name2({
+      name1: options[0]?.title || "1",
+      name2: options[1]?.title || "2",
+    })}? ${poll.description || ""}`.trim(),
   };
 
   return (
@@ -39,6 +46,7 @@ export default function PollPage({ poll, latest }: Props) {
         }}
       >
         <PollItem item={poll} active={true} />
+        <p className="text-center text-gray-500">${poll.description}</p>
         {/* {Items} */}
       </motion.div>
     </Layout>

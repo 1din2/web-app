@@ -24,20 +24,15 @@ export default function PollItem({
   const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
   const { setShowLoginModal } = useContext(LoginModalContext);
-  const { ShareModal, setShowShareModal } = useShareModal(
-    `${ROOT_URL}/${links.poll(item.slug)}`,
-  );
+  const { setShowShareModal } = useContext(ShareModalContext);
+  useShareModal(`${ROOT_URL}/${links.poll(item.slug)}`, item.title);
   let currentUser = getCurrentUser();
 
   useEffect(() => {
     if (currentUser && !voting && !poll.userVotes?.length && item === poll) {
-      // MAP_IDS[poll.id] = poll.id;
-      console.log("initial poll getting");
-
       apiClient()
         .pollBySlug({ slug: poll.slug })
         .then((p) => {
-          console.log(`got p`);
           if (p) setPoll(p);
         });
     }
@@ -65,7 +60,9 @@ export default function PollItem({
         .vote({ pollOptionIds: [option.id] })
         .then((p) => {
           setPoll(p);
-          setShowShareModal && setShowShareModal(true);
+          setTimeout(() => {
+            setShowShareModal && setShowShareModal(true);
+          }, 1000);
         })
         .finally(() => setVoting(false));
     }
@@ -89,7 +86,7 @@ export default function PollItem({
         }${canVote ? " can-vote" : ""}`}
         onClick={canVote ? (e) => onClickOption(e as never, option) : undefined}
       >
-        <Image
+        {/* <Image
           src="https://storage.agora.md/api/v1/t/0f72916c7469b1ab500ddba7c24c4a695a8bf928/public/fit_1280"
           alt={option.title}
           // width={500}
@@ -100,17 +97,16 @@ export default function PollItem({
           // className="absolute top-0 left-0 w-full h-full"
           // className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
           className="flex-none"
-        />
+        /> */}
         {/* <div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent to-slate-900" /> */}
         <div className="absolute top-0 h-1/3 w-full bg-gradient-to-t from-transparent to-gray-800 group-[.is-selected]:to-green-700" />
         {option.image?.url && (
           <Image
             src={option.image.url}
             alt={option.title}
-            width={500}
-            height={500}
             fill={true}
             className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
+            style={{ objectFit: "cover" }}
           />
         )}
         <div className="absolute top-0 w-full grow overflow-hidden bg-opacity-25 py-2 text-white ">
@@ -129,7 +125,7 @@ export default function PollItem({
         <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" />
         {voting && <LoadingDots color="text-sky-600" />}
         {!voting && (
-          <CheckCircle className="group-[.can-vote]-hover:text-sky-600 absolute bottom-2 right-2 h-10 w-10 text-white opacity-50 shadow transition-colors group-[.is-selected]:opacity-90" />
+          <CheckCircle className="group-[.can-vote]-hover:text-sky-600 absolute bottom-2 right-2 h-10 w-10 text-white opacity-50 transition-colors group-[.is-selected]:opacity-90" />
         )}
       </div>
     );
@@ -154,16 +150,15 @@ export default function PollItem({
       className="relative mx-auto mb-10 mt-2 w-full overflow-hidden sm:w-[600px]"
       variants={FADE_DOWN_ANIMATION_VARIANTS}
     >
-      <ShareModal />
       <Link className="link block w-full" href={links.poll(poll.slug)}>
         {h}
         {!isActive && content}
       </Link>
       {isActive && content}
-      <div className="ml-4 mr-4 flex items-center justify-center rounded-b-2xl bg-gray-200">
+      <div className="ml-4 mr-4 flex items-center rounded-b-2xl bg-gray-200 px-4">
         <div>
           {(poll.tags || []).map((it) => (
-            <Link className="mr-2" key={it.slug} href={links.tag(it.slug)}>
+            <Link className="link mr-2" key={it.slug} href={links.tag(it.slug)}>
               #{it.name}
             </Link>
           ))}

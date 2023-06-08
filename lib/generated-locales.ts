@@ -37,6 +37,18 @@ export class LocalizyLocales {
     }
     
 
+    logo_name() {
+        return this.v('logo_name');
+    }
+
+    index_title() {
+        return this.v('index_title');
+    }
+
+    index_description() {
+        return this.v('index_description');
+    }
+
     tag_page_title_format(_p1: { name: string }) {
         return this.v('tag_page_title_format', Array.from(arguments));
     }
@@ -44,7 +56,20 @@ export class LocalizyLocales {
     latest_polls() {
         return this.v('latest_polls');
     }
+
+    share_poll_info() {
+        return this.v('share_poll_info');
+    }
+
+    name1_or_name2(_p1: { name1: string; name2: string }) {
+        return this.v('name1_or_name2', Array.from(arguments));
+    }
 }
 
-export type LocalesKey = 'tag_page_title_format'
-    | 'latest_polls';
+export type LocalesKey = 'logo_name'
+    | 'index_title'
+    | 'index_description'
+    | 'tag_page_title_format'
+    | 'latest_polls'
+    | 'share_poll_info'
+    | 'name1_or_name2';

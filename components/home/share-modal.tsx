@@ -7,7 +7,7 @@ import {
   useMemo,
   createContext,
 } from "react";
-import { FACEBOOK_APP_ID } from "@/lib/constants";
+import { FACEBOOK_APP_ID, FROM_EMAIL } from "@/lib/constants";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -18,38 +18,44 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "react-share";
+import locales from "@/lib/locales";
+import ShareIcon from "../shared/icons/share-icon";
 
 const ShareModal = ({
   showShareModal,
   setShowShareModal,
   url,
+  title,
 }: {
   showShareModal: boolean;
   setShowShareModal: Dispatch<SetStateAction<boolean>>;
   url: string;
+  title?: string;
 }) => {
+  const size = 42;
   return (
     <Modal showModal={showShareModal} setShowModal={setShowShareModal}>
       <div className="w-full overflow-hidden shadow-xl md:max-w-md md:rounded-2xl md:border md:border-gray-200">
         <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-6 pt-8 text-center md:px-16">
-          <h3 className="font-display text-2xl font-bold">Share</h3>
-          <p className="text-sm text-gray-500">
-            Share with Facebook or Google.
-          </p>
+          {/* <h3 className="font-display text-2xl font-bold">Share</h3> */}
+          <div className="justify-center">
+            <ShareIcon className="h-11 w-11" />
+          </div>
+          <p className="text-sm text-gray-500">{locales.share_poll_info()}</p>
         </div>
 
-        <div className="grid gap-2 bg-gray-50 px-4 py-8 md:px-16">
+        <div className="flex items-center justify-center space-x-4 bg-gray-50 px-4 py-8 md:px-16">
           <FacebookShareButton url={url}>
-            <FacebookIcon size={32} className="rounded" />
+            <FacebookIcon size={size} className="rounded-full" />
           </FacebookShareButton>
           <FacebookMessengerShareButton url={url} appId={FACEBOOK_APP_ID}>
-            <FacebookMessengerIcon size={32} className="rounded" />
+            <FacebookMessengerIcon size={size} className="rounded-full" />
           </FacebookMessengerShareButton>
           <TwitterShareButton url={url}>
-            <TwitterIcon size={32} className="rounded" />
+            <TwitterIcon size={size} className="rounded-full" />
           </TwitterShareButton>
-          <EmailShareButton url={url}>
-            <EmailIcon size={32} className="rounded" />
+          <EmailShareButton url={url} form={FROM_EMAIL} title={title}>
+            <EmailIcon size={size} className="rounded-full" />
           </EmailShareButton>
         </div>
       </div>
@@ -57,7 +63,7 @@ const ShareModal = ({
   );
 };
 
-export function useShareModal(url: string) {
+export function useShareModal(url: string, title?: string) {
   const [showShareModal, setShowShareModal] = useState(false);
 
   const ShareModalCallback = useCallback(() => {
@@ -66,6 +72,7 @@ export function useShareModal(url: string) {
         showShareModal={showShareModal}
         setShowShareModal={setShowShareModal}
         url={url}
+        title={title}
       />
     );
   }, [showShareModal, setShowShareModal, url]);

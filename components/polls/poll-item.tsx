@@ -11,6 +11,7 @@ import apiClient from "@/lib/api/api-client";
 import { LoadingDots } from "../shared/icons";
 import Image from "next/image";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
+import { hasVotedForIt } from "@/lib/has-voted-for-it";
 
 // const MAP_IDS: Record<string, string> = {};
 
@@ -53,7 +54,6 @@ export default function PollItem({
       return;
     // if (!active) return;
     if (currentUser) {
-      console.log("vote", option);
       // const { data, error } = useSWR('/api/user', fetcher)
       setVoting(true);
       apiClient()
@@ -61,7 +61,10 @@ export default function PollItem({
         .then((p) => {
           setPoll(p);
           setTimeout(() => {
-            setShowShareModal && setShowShareModal(true);
+            if (!hasVotedForIt(poll.id)) {
+              setShowShareModal && setShowShareModal(true);
+              hasVotedForIt(poll.id, true);
+            }
           }, 1000);
         })
         .finally(() => setVoting(false));
@@ -99,7 +102,6 @@ export default function PollItem({
           className="flex-none"
         /> */}
         {/* <div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent to-slate-900" /> */}
-        <div className="absolute top-0 h-1/3 w-full bg-gradient-to-t from-transparent to-gray-800 group-[.is-selected]:to-green-700" />
         {option.image?.url && (
           <Image
             src={option.image.url}
@@ -109,22 +111,23 @@ export default function PollItem({
             style={{ objectFit: "cover" }}
           />
         )}
+        <div className="absolute top-0 h-1/3 w-full bg-gradient-to-t from-transparent to-gray-700" />
         <div className="absolute top-0 w-full grow overflow-hidden bg-opacity-25 py-2 text-white ">
           <div className="mb-1 text-lg font-semibold drop-shadow">
             {option.title}
           </div>
-          <div className="whitespace-nowrap text-xs text-gray-300">
+          <div className="whitespace-nowrap text-xs text-gray-300 drop-shadow">
             {option.description}
           </div>
         </div>
         <div className="absolute bottom-2 grow-0">
-          <div className="m-auto mb-1 inline-block rounded bg-gray-700 bg-opacity-75 px-4 py-0 text-lg font-semibold text-white">
+          <div className="m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800">
             {option.votesCount}
           </div>
         </div>
-        <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" />
+        {/* <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" /> */}
         {voting && <LoadingDots color="text-sky-600" />}
-        {!voting && (
+        {!voting && isSelected && (
           <CheckCircle className="group-[.can-vote]-hover:text-sky-600 absolute bottom-2 right-2 h-10 w-10 text-white opacity-50 transition-colors group-[.is-selected]:opacity-90" />
         )}
       </div>

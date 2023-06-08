@@ -4,7 +4,7 @@ import PollList from "@/components/polls/poll-list";
 import { Twitter } from "@/components/shared/icons";
 import Tooltip from "@/components/shared/tooltip";
 import apiClient from "@/lib/api/api-client";
-import { Poll } from "@/lib/api/types";
+import { Poll, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import { motion } from "framer-motion";
 import Balancer from "react-wrap-balancer";
@@ -94,7 +94,7 @@ export default function Home({ polls }: Props) {
 export async function getStaticProps() {
   const client = apiClient();
   const polls = await client.pollList({
-    // status: PollStatus.DRAFT,
+    status: [PollStatus.ACTIVE],
     limit: 5,
   });
 

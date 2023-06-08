@@ -31,7 +31,11 @@ function init(
   set: (
     name: string,
     value: string,
-    attributes?: { expires?: number; path?: string },
+    attributes?: {
+      /** in days */
+      expires?: number;
+      path?: string;
+    },
   ) => void;
 } {
   function set(name: string, value: string, attributes: any) {

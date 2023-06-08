@@ -1,8 +1,6 @@
 export default function ShareIcon({ className }: { className?: string }) {
   return (
     <svg
-      width="1155"
-      height="1000"
       viewBox="0 0 1155 1000"
       xmlns="http://www.w3.org/2000/svg"
       className={className}

@@ -39,7 +39,7 @@ const ShareModal = ({
         <div className="flex flex-col items-center justify-center space-y-3 border-b border-gray-200 bg-white px-4 py-6 pt-8 text-center md:px-16">
           {/* <h3 className="font-display text-2xl font-bold">Share</h3> */}
           <div className="justify-center">
-            <ShareIcon className="h-11 w-11" />
+            <ShareIcon className="h-8 w-8" />
           </div>
           <p className="text-sm text-gray-500">{locales.share_poll_info()}</p>
         </div>

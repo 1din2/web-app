@@ -5,3 +5,7 @@
 .link {
   @apply text-gray-600 transition-colors hover:text-black;
 }
+
+.can-vote {
+  cursor: pointer;
+}

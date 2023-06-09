@@ -1,4 +1,4 @@
-import { LOCALE_API_URL, PROJECT_ID, LANG } from "../constants";
+import { LOCAL_API_URL, PROJECT_ID, LANG } from "../constants";
 import { getCurrentUser } from "../current-user";
 
 const apiFetcher = async <T>(
@@ -6,7 +6,7 @@ const apiFetcher = async <T>(
   variables = {},
   token: string = getCurrentUser()?.token || "",
 ): Promise<T> => {
-  const url = LOCALE_API_URL;
+  const url = LOCAL_API_URL;
   const response = await fetch(url, {
     method: "POST",
     headers: {

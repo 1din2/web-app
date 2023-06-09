@@ -87,7 +87,7 @@ export default function PollItem({
         className={`group relative flex flex-1 flex-col items-center overflow-hidden p-4 first:border-b md:first:border-r text-center${
           isSelected ? " is-selected" : ""
         }${canVote ? " can-vote" : ""}`}
-        onClick={canVote ? (e) => onClickOption(e as never, option) : undefined}
+        onClick={(e) => onClickOption(e as never, option)}
       >
         {/* <Image
           src="https://storage.agora.md/api/v1/t/0f72916c7469b1ab500ddba7c24c4a695a8bf928/public/fit_1280"
@@ -141,7 +141,12 @@ export default function PollItem({
   );
 
   const content = (
-    <div className="relative mx-auto mt-2 h-[480px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px]">
+    <div
+      className={
+        (poll.status === PollStatus.ACTIVE ? "status-active " : "") +
+        "poll-item relative mx-auto mt-2 h-[480px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px]"
+      }
+    >
       <div className="flex h-full flex-col sm:flex-row">
         {(poll.options || []).map(optionItem)}
       </div>

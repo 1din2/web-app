@@ -6,6 +6,6 @@
   @apply text-gray-600 transition-colors hover:text-black;
 }
 
-.can-vote {
+.status-active {
   cursor: pointer;
 }

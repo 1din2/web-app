@@ -9,7 +9,6 @@ import locales from "@/lib/locales";
 import { motion } from "framer-motion";
 import { GetStaticPropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Balancer from "react-wrap-balancer";
 
 export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
   const Items = <PollList list={polls} />;
@@ -38,9 +37,7 @@ export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
           className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Balancer>
-            {locales.tag_page_title_format({ name: tag.name })}
-          </Balancer>
+          {locales.tag_page_title_format({ name: tag.name })}
         </motion.h1>
         {Items}
       </motion.div>
@@ -67,8 +64,8 @@ export const getStaticProps = async (
   const [tag, polls] = await Promise.all([
     client.tagBySlug({ slug }),
     client.pollList({
-      // status: PollStatus.DRAFT,
-      limit: 10,
+      status: [PollStatus.ACTIVE, PollStatus.ENDED],
+      limit: 5,
       tag: slug,
     }),
   ]);

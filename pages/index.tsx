@@ -93,6 +93,7 @@ export default function Home({ polls }: Props) {
 
 export async function getStaticProps() {
   const client = apiClient();
+
   const polls = await client.pollList({
     status: [PollStatus.ACTIVE],
     limit: 5,
@@ -102,6 +103,6 @@ export async function getStaticProps() {
     props: {
       polls,
     },
-    revalidate: 60,
+    revalidate: 60 * 30,
   };
 }

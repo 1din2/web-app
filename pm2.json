@@ -1,8 +1,7 @@
 {
   "apps": [
     {
-      "script": "node_modules/next/dist/bin/next",
-      "args": "start -p 42323",
+      "script": "yarn next start -p 42323",
       "max_memory_restart": "300M",
       "name": "1of2-ro",
       "env": {

@@ -8,7 +8,7 @@ import {
   createContext,
   useEffect,
 } from "react";
-import { FADE_DOWN_ANIMATION_VARIANTS, PROJECT_ID } from "@/lib/constants";
+import { API_URL, FADE_DOWN_ANIMATION_VARIANTS, PROJECT_ID } from "@/lib/constants";
 import { saveCurrentUserToken } from "@/lib/current-user";
 import { motion } from "framer-motion";
 import Facebook from "../shared/icons/facebook";
@@ -47,7 +47,7 @@ const LoginModal = ({
 
   const clickLogin = (provider: string) => {
     const w = window as any;
-    const url = `http://localhost:42123/auth/${provider}?project=${PROJECT_ID}`;
+    const url = `${API_URL}/auth/${provider}?project=${PROJECT_ID}`;
     const popWidth = 600,
       popHeight = 480,
       left = w.innerWidth / 2 - popWidth / 2 + w.screenX,

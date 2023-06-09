@@ -75,7 +75,7 @@ export function useShareModal(url: string, title?: string) {
         title={title}
       />
     );
-  }, [showShareModal, setShowShareModal, url]);
+  }, [showShareModal, setShowShareModal, url, title]);
 
   return useMemo(
     () => ({

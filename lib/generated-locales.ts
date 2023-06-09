@@ -64,6 +64,14 @@ export class LocalizyLocales {
     name1_or_name2(_p1: { name1: string; name2: string }) {
         return this.v('name1_or_name2', Array.from(arguments));
     }
+
+    title() {
+        return this.v('title');
+    }
+
+    description() {
+        return this.v('description');
+    }
 }
 
 export type LocalesKey = 'logo_name'
@@ -72,4 +80,6 @@ export type LocalesKey = 'logo_name'
     | 'tag_page_title_format'
     | 'latest_polls'
     | 'share_poll_info'
-    | 'name1_or_name2';
+    | 'name1_or_name2'
+    | 'title'
+    | 'description';

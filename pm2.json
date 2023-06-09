@@ -4,6 +4,7 @@
       "script": "yarn next start -p 42323",
       "max_memory_restart": "300M",
       "name": "1of2-ro",
+      "restart_delay": 3000,
       "env": {
         "PORT": 42323
       }

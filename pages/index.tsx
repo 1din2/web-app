@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function Home({ polls }: Props) {
-  const Items = <PollList list={polls} />;
+  const Items = <PollList list={polls} votable={true} />;
   const meta: MetaData = {
     canonical: ROOT_URL,
   };

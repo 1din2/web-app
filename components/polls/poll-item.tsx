@@ -17,10 +17,10 @@ import { hasVotedForIt } from "@/lib/has-voted-for-it";
 
 export default function PollItem({
   item,
-  active = false,
+  votable,
 }: {
   item: Poll;
-  active?: boolean;
+  votable: boolean;
 }) {
   const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
@@ -39,22 +39,23 @@ export default function PollItem({
     }
   }, [currentUser, voting, poll, item]);
 
-  const isActive = active && poll.status === PollStatus.ACTIVE;
+  const isActive = votable && poll.status === PollStatus.ACTIVE;
+  const canVote = currentUser && isActive;
 
   const onClickOption = (e: Event, option: PollOption) => {
+    if (!isActive) return;
+    if (isActive && !currentUser) setShowLoginModal && setShowLoginModal(true);
+
     e.preventDefault();
     e.stopPropagation();
-    if (!currentUser) {
-      setShowLoginModal && setShowLoginModal(true);
-    }
+
     if (
       voting ||
       (poll.userVotes || []).find((it) => it.pollOptionId === option.id)
     )
       return;
-    // if (!active) return;
+
     if (currentUser) {
-      // const { data, error } = useSWR('/api/user', fetcher)
       setVoting(true);
       apiClient()
         .vote({ pollOptionIds: [option.id] })
@@ -81,7 +82,6 @@ export default function PollItem({
   )[0];
 
   const optionItem = (option: PollOption) => {
-    const canVote = currentUser && isActive;
     const isWinner =
       winnerOption &&
       winnerOption.votesCount > 0 &&
@@ -95,7 +95,6 @@ export default function PollItem({
       "pi",
       isWinner ? "is-winner" : "not-winner",
       isSelected ? "is-selected" : "not-selected",
-      canVote ? "can-vote" : "cannot-vote",
     ].join(" ");
 
     return (
@@ -151,6 +150,8 @@ export default function PollItem({
       </div>
     </div>
   );
+
+  const pClass = ["p", canVote ? "can-vote" : "cannot-vote"].join(" ");
 
   return (
     <motion.div

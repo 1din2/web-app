@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function PollPage({ poll, latest }: Props) {
-  const Items = <PollList list={latest} />;
+  const Items = <PollList list={latest} votable={false} />;
   const options = poll.options || [];
   const meta: MetaData = {
     canonical: `${ROOT_URL}${links.poll(poll.slug)}`,
@@ -46,7 +46,7 @@ export default function PollPage({ poll, latest }: Props) {
           },
         }}
       >
-        <PollItem item={poll} active={true} />
+        <PollItem item={poll} votable={true} />
         <p className="text-center text-gray-500">{poll.description}</p>
         {/* {Items} */}
       </motion.div>

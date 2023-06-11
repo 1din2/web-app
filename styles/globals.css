@@ -37,3 +37,7 @@
 .pi.is-selected .pi-check,.pi.can-vote:hover .pi-check {
   @apply opacity-100;
 }
+
+.p {
+  @apply relative mx-auto mb-10 mt-2 w-full overflow-hidden sm:w-[600px];
+}

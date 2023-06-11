@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Balancer from "react-wrap-balancer";
 
 export default function SettingsPage() {
-  const [currentUser] = useState(getCurrentUser());
+  const [currentUser, setCurrentUser] = useState(getCurrentUser());
   const meta: MetaData = {
     canonical: links.settings(),
     title: locales.settings(),
@@ -21,6 +21,11 @@ export default function SettingsPage() {
   useEffect(() => {
     if (!currentUser) setShowLoginModal(true);
   }, [currentUser, setShowLoginModal]);
+
+  if (!currentUser) {
+    const d = getCurrentUser();
+    if (d) setCurrentUser(d);
+  }
 
   const deleteMyData = () => {
     if (!currentUser) setShowLoginModal(true);

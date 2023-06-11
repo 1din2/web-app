@@ -43,7 +43,7 @@
 }
 
 .p-body {
-  @apply relative mx-auto mt-2 h-[620px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px];
+  @apply relative mx-auto mt-2 h-[580px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px];
 }
 
 .p-body.not-rounded {

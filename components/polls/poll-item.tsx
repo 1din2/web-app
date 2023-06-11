@@ -73,7 +73,7 @@ export default function PollItem({
               setShowShareModal && setShowShareModal(true);
               hasVotedForIt(poll.id, true);
             }
-          }, 1000);
+          }, 2000);
         });
     }
   };

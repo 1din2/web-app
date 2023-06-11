@@ -113,14 +113,10 @@ export default function PollItem({
             style={{ objectFit: "cover" }}
           />
         )}
-        <div className="absolute top-0 h-1/3 w-full bg-gradient-to-t from-transparent to-gray-700" />
-        <div className="absolute top-0 w-full grow overflow-hidden bg-opacity-25 py-2 text-white ">
-          <div className="mb-1 text-lg font-semibold drop-shadow">
-            {option.title}
-          </div>
-          <div className="whitespace-nowrap text-xs text-gray-300 drop-shadow">
-            {option.description}
-          </div>
+        <div className="pi-shadow" />
+        <div className="pi-text">
+          <div className="pi-title">{option.title}</div>
+          <div className="pi-d">{option.description}</div>
         </div>
         <div className="absolute bottom-2 grow-0">
           <div className="pi-counter">{option.votesCount}</div>
@@ -132,26 +128,21 @@ export default function PollItem({
     );
   };
 
-  const h = (
-    <h2 className="p-2 text-center font-display text-2xl font-semibold sm:text-3xl sm:leading-[2.2rem]">
-      {poll.title}
-    </h2>
-  );
+  const h = <h2 className="p-title">{poll.title}</h2>;
 
   const content = (
-    <div
-      className={
-        (poll.status === PollStatus.ACTIVE ? "status-active " : "") +
-        "poll-item relative mx-auto mt-2 h-[480px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px]"
-      }
-    >
+    <div className="p-body">
       <div className="flex h-full flex-col sm:flex-row">
         {(poll.options || []).map(optionItem)}
       </div>
     </div>
   );
 
-  const pClass = ["p", canVote ? "can-vote" : "cannot-vote"].join(" ");
+  const pClass = [
+    "p",
+    canVote ? "can-vote" : "cannot-vote",
+    isActive ? "is-active" : "not-active",
+  ].join(" ");
 
   return (
     <motion.div className={pClass} variants={FADE_DOWN_ANIMATION_VARIANTS}>
@@ -160,14 +151,12 @@ export default function PollItem({
         {!isActive && content}
       </Link>
       {isActive && content}
-      <div className="ml-4 mr-4 flex items-center rounded-b-2xl bg-gray-200 px-4">
-        <div>
-          {(poll.tags || []).map((it) => (
-            <Link className="link mr-2" key={it.slug} href={links.tag(it.slug)}>
-              #{it.name}
-            </Link>
-          ))}
-        </div>
+      <div className="p-tags">
+        {(poll.tags || []).map((it) => (
+          <Link className="link mr-2" key={it.slug} href={links.tag(it.slug)}>
+            #{it.name}
+          </Link>
+        ))}
       </div>
     </motion.div>
   );

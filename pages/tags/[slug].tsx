@@ -11,7 +11,7 @@ import { GetStaticPropsContext } from "next";
 import { ParsedUrlQuery } from "querystring";
 
 export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
-  const Items = <PollList list={polls} />;
+  const Items = <PollList list={polls} votable={false} />;
   const meta: MetaData = {
     canonical: `${ROOT_URL}${links.tag(tag.slug)}`,
   };

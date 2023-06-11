@@ -3,7 +3,7 @@ import { Poll, PollOption, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import links from "@/lib/links";
 import Link from "next/link";
-import { getCurrentUser, onCurrentUserChanged } from "@/lib/current-user";
+import { getCurrentUser } from "@/lib/current-user";
 import { useContext, useEffect, useState } from "react";
 import { LoginModalContext } from "../home/login-modal";
 import CheckCircle from "../shared/icons/check-circle";
@@ -24,22 +24,27 @@ export default function PollItem({
   votable: boolean;
   rounded?: boolean;
 }) {
-  const [voting, setVoting] = useState(false);
+  // const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
   const { setShowLoginModal } = useContext(LoginModalContext);
   const { setShowShareModal } = useContext(ShareModalContext);
   useShareModal(`${ROOT_URL}/${links.poll(item.slug)}`, item.title);
-  let currentUser = getCurrentUser();
+  const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
   useEffect(() => {
-    if (currentUser && !voting && !poll.userVotes?.length && item === poll) {
+    if (currentUser && !poll.userVotes?.length && item === poll) {
       apiClient()
         .pollBySlug({ slug: poll.slug })
         .then((p) => {
           if (p) setPoll(p);
         });
     }
-  }, [currentUser, voting, poll, item]);
+  }, [currentUser, poll, item]);
+
+  if (!currentUser) {
+    const d = getCurrentUser();
+    if (d) setCurrentUser(d);
+  }
 
   const isActive = votable && poll.status === PollStatus.ACTIVE;
   const canVote = currentUser && isActive;
@@ -52,13 +57,13 @@ export default function PollItem({
     e.stopPropagation();
 
     if (
-      voting ||
+    
       (poll.userVotes || []).find((it) => it.pollOptionId === option.id)
     )
       return;
 
     if (currentUser) {
-      setVoting(true);
+      // setVoting(true);
       apiClient()
         .vote({ pollOptionIds: [option.id] })
         .then((p) => {
@@ -69,15 +74,9 @@ export default function PollItem({
               hasVotedForIt(poll.id, true);
             }
           }, 1000);
-        })
-        .finally(() => setVoting(false));
+        });
     }
   };
-
-  onCurrentUserChanged("poll-item", () => {
-    currentUser = getCurrentUser();
-    setVoting(false);
-  });
 
   const winnerOption = [...(poll.options || [])].sort(
     (a, b) => b.votesCount - a.votesCount,
@@ -123,8 +122,8 @@ export default function PollItem({
           <div className="pi-counter">{option.votesCount}</div>
         </div>
         {/* <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" /> */}
-        {voting && <LoadingDots color="text-sky-600" />}
-        {!voting && canVote && <CheckCircle className="pi-check" />}
+        {/* {voting && <LoadingDots color="text-sky-600" />} */}
+        {canVote && <CheckCircle className="pi-check" />}
       </div>
     );
   };

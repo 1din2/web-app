@@ -47,7 +47,7 @@ export default function PollPage({ poll, latest }: Props) {
         }}
       >
         <PollItem item={poll} active={true} />
-        <p className="text-center text-gray-500">${poll.description}</p>
+        <p className="text-center text-gray-500">{poll.description}</p>
         {/* {Items} */}
       </motion.div>
     </Layout>

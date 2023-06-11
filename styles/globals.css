@@ -9,3 +9,31 @@
 .status-active {
   cursor: pointer;
 }
+
+.pi {
+  @apply relative flex flex-1 flex-col items-center overflow-hidden p-4 first:border-b md:first:border-r text-center;
+}
+
+.pi-counter {
+  @apply m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800;
+}
+
+.pi.is-winner .pi-counter {
+  @apply text-gray-100 bg-gradient-to-r from-green-800 to-green-500;
+}
+
+.pi.can-vote .pi-image {
+  @apply grayscale;
+}
+
+.pi.is-selected .pi-image {
+  @apply grayscale-0;
+}
+
+.pi-check {
+  @apply absolute bottom-2 right-2 h-10 w-10 opacity-20 transition-colors;
+}
+
+.pi.is-selected .pi-check,.pi.can-vote:hover .pi-check {
+  @apply opacity-100;
+}

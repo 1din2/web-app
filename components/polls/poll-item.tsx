@@ -76,38 +76,41 @@ export default function PollItem({
     setVoting(false);
   });
 
+  const winnerOption = [...(poll.options || [])].sort(
+    (a, b) => b.votesCount - a.votesCount,
+  )[0];
+
   const optionItem = (option: PollOption) => {
     const canVote = currentUser && isActive;
+    const isWinner =
+      winnerOption &&
+      winnerOption.votesCount > 0 &&
+      winnerOption.id === option.id;
+
     const isSelected =
       currentUser &&
       !!(poll.userVotes || []).find((it) => it.pollOptionId === option.id);
+
+    const piClass = [
+      "pi",
+      isWinner ? "is-winner" : "not-winner",
+      isSelected ? "is-selected" : "not-selected",
+      canVote ? "can-vote" : "cannot-vote",
+    ].join(" ");
+
     return (
       <div
         key={option.id}
-        className={`group relative flex flex-1 flex-col items-center overflow-hidden p-4 first:border-b md:first:border-r text-center${
-          isSelected ? " is-selected" : ""
-        }${canVote ? " can-vote" : ""}`}
+        className={piClass}
         onClick={(e) => onClickOption(e as never, option)}
       >
-        {/* <Image
-          src="https://storage.agora.md/api/v1/t/0f72916c7469b1ab500ddba7c24c4a695a8bf928/public/fit_1280"
-          alt={option.title}
-          // width={500}
-          // height={500}
-          fill={true}
-          // objectFit="cover"
-          style={{ objectFit: "cover" }}
-          // className="absolute top-0 left-0 w-full h-full"
-          // className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
-          className="flex-none"
-        /> */}
         {/* <div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent to-slate-900" /> */}
         {option.image?.url && (
           <Image
             src={option.image.url}
             alt={option.title}
             fill={true}
-            className="group-[.can-vote]:grayscale group-[.is-selected]:grayscale-0"
+            className="pi-image"
             style={{ objectFit: "cover" }}
           />
         )}
@@ -121,15 +124,11 @@ export default function PollItem({
           </div>
         </div>
         <div className="absolute bottom-2 grow-0">
-          <div className="m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800">
-            {option.votesCount}
-          </div>
+          <div className="pi-counter">{option.votesCount}</div>
         </div>
         {/* <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" /> */}
         {voting && <LoadingDots color="text-sky-600" />}
-        {!voting && isSelected && (
-          <CheckCircle className="group-[.can-vote]-hover:text-sky-600 absolute bottom-2 right-2 h-10 w-10 text-white opacity-50 transition-colors group-[.is-selected]:opacity-90" />
-        )}
+        {!voting && canVote && <CheckCircle className="pi-check" />}
       </div>
     );
   };

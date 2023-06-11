@@ -13,5 +13,9 @@
   "terms_content_md": "### Datele tale personale\n\nÎți respectăm viața privată, iar protecția datelor tale e o responsabilitate pe care ne-o asumăm. Colectăm doar ceea ce este necesar ca să ne facem treaba și nu vindem niciodată informațiile pe care le primim de la tine.\n\nDatele colectate sunt:\n\n1. Date primite de la facebook sau google despre tine\n2. Voturile tale\n\n Oricând puteți șterge datele Dvs. accesând pagina [Setări](/settings).\n\nCodul sursă al acestui site este disponibil pe [github](https://github.com/1din2/web-app).",
   "privacy_title": "Politica de confidențialitate",
   "privacy_description": "Folosind acest site, ești de acord cu politica de confidențialitate.",
-  "an_open_source_project": "Un proiect open source"
+  "an_open_source_project": "Un proiect open source",
+  "settings": "Setări",
+  "settings_description": "Setările tale",
+  "delete_my_data_info": "Aici poți șterge datele tale personale.",
+  "delete_my_data": "Șterge datele mele"
 }

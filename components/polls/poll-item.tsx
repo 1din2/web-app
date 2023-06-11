@@ -154,10 +154,7 @@ export default function PollItem({
   const pClass = ["p", canVote ? "can-vote" : "cannot-vote"].join(" ");
 
   return (
-    <motion.div
-      className="relative mx-auto mb-10 mt-2 w-full overflow-hidden sm:w-[600px]"
-      variants={FADE_DOWN_ANIMATION_VARIANTS}
-    >
+    <motion.div className={pClass} variants={FADE_DOWN_ANIMATION_VARIANTS}>
       <Link className="link block w-full" href={links.poll(poll.slug)}>
         {h}
         {!isActive && content}

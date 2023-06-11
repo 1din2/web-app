@@ -3,21 +3,10 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import useScroll from "@/lib/hooks/use-scroll";
 import Meta, { MetaData } from "./meta";
-import { Github } from "../shared/icons";
 import { useLoginModal, LoginModalContext } from "../home/login-modal";
-import {
-  EmailIcon,
-  EmailShareButton,
-  FacebookIcon,
-  FacebookMessengerIcon,
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from "react-share";
-import { FACEBOOK_APP_ID, FROM_EMAIL } from "@/lib/constants";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
 import locales from "@/lib/locales";
+import ShareButtons from "../shared/share-buttons";
 
 export default function Layout({
   meta,
@@ -55,48 +44,7 @@ export default function Layout({
             <p>{locales.logo_name()}</p>
           </Link>
           <div className="flex items-center space-x-4">
-            <FacebookShareButton url={meta.canonical}>
-              <FacebookIcon size={32} className="rounded-full" />
-            </FacebookShareButton>
-            <FacebookMessengerShareButton
-              url={meta.canonical}
-              appId={FACEBOOK_APP_ID}
-            >
-              <FacebookMessengerIcon size={32} className="rounded-full" />
-            </FacebookMessengerShareButton>
-            <TwitterShareButton url={meta.canonical}>
-              <TwitterIcon size={32} className="rounded-full" />
-            </TwitterShareButton>
-            <EmailShareButton
-              url={meta.canonical}
-              form={FROM_EMAIL}
-              title={meta.title}
-            >
-              <EmailIcon size={32} className="rounded-full" />
-            </EmailShareButton>
-            {/* <a
-              href="https://vercel.com/templates/next.js/extrapolate"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg
-                width="1155"
-                height="1000"
-                viewBox="0 0 1155 1000"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-              >
-                <path d="M577.344 0L1154.69 1000H0L577.344 0Z" fill="black" />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/steven-tey/extrapolate"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github />
-            </a> */}
+            <ShareButtons url={meta.canonical} />
           </div>
         </div>
       </div>

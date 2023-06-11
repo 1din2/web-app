@@ -7,19 +7,9 @@ import {
   useMemo,
   createContext,
 } from "react";
-import { FACEBOOK_APP_ID, FROM_EMAIL } from "@/lib/constants";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  EmailShareButton,
-  EmailIcon,
-} from "react-share";
 import locales from "@/lib/locales";
 import ShareIcon from "../shared/icons/share-icon";
+import ShareButtons from "../shared/share-buttons";
 
 const ShareModal = ({
   showShareModal,
@@ -45,18 +35,7 @@ const ShareModal = ({
         </div>
 
         <div className="flex items-center justify-center space-x-4 bg-gray-50 px-4 py-8 md:px-16">
-          <FacebookShareButton url={url}>
-            <FacebookIcon size={size} className="rounded-full" />
-          </FacebookShareButton>
-          <FacebookMessengerShareButton url={url} appId={FACEBOOK_APP_ID}>
-            <FacebookMessengerIcon size={size} className="rounded-full" />
-          </FacebookMessengerShareButton>
-          <TwitterShareButton url={url}>
-            <TwitterIcon size={size} className="rounded-full" />
-          </TwitterShareButton>
-          <EmailShareButton url={url} form={FROM_EMAIL} title={title}>
-            <EmailIcon size={size} className="rounded-full" />
-          </EmailShareButton>
+          <ShareButtons url={url} title={title} size={size} />
         </div>
       </div>
     </Modal>

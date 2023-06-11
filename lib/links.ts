@@ -8,6 +8,7 @@ const draft = () => `/draft`;
 const settings = () => `/settings`;
 const tag = (slug: string) => `/tags/${slug}`;
 const pollSocialImage = (slug: string) => `/api/pi/${slug}`;
+const terms = () => `/terms`;
 
 const links = {
   home,
@@ -20,6 +21,7 @@ const links = {
   settings,
   tag,
   pollSocialImage,
+  terms,
 };
 
 export default links;

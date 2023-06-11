@@ -72,6 +72,30 @@ export class LocalizyLocales {
     description() {
         return this.v('description');
     }
+
+    terms_title() {
+        return this.v('terms_title');
+    }
+
+    terms_description() {
+        return this.v('terms_description');
+    }
+
+    terms_content_md() {
+        return this.v('terms_content_md');
+    }
+
+    privacy_title() {
+        return this.v('privacy_title');
+    }
+
+    privacy_description() {
+        return this.v('privacy_description');
+    }
+
+    an_open_source_project() {
+        return this.v('an_open_source_project');
+    }
 }
 
 export type LocalesKey = 'logo_name'
@@ -82,4 +106,10 @@ export type LocalesKey = 'logo_name'
     | 'share_poll_info'
     | 'name1_or_name2'
     | 'title'
-    | 'description';
+    | 'description'
+    | 'terms_title'
+    | 'terms_description'
+    | 'terms_content_md'
+    | 'privacy_title'
+    | 'privacy_description'
+    | 'an_open_source_project';

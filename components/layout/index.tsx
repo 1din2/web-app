@@ -7,6 +7,7 @@ import { useLoginModal, LoginModalContext } from "../home/login-modal";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
 import locales from "@/lib/locales";
 import ShareButtons from "../shared/share-buttons";
+import links from "@/lib/links";
 
 export default function Layout({
   meta,
@@ -57,33 +58,20 @@ export default function Layout({
       </main>
       <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center">
         <p className="text-gray-500">
-          Powered by{" "}
+          {locales.an_open_source_project()}
+          {": "}
           <a
-            className="font-semibold text-gray-600 transition-colors hover:text-black"
-            href="https://vercel.com"
+            className="link font-semibold"
+            href="https://github.com/1din2"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Vercel
+            Github
           </a>
-          ,{" "}
-          <a
-            className="font-semibold text-gray-600 transition-colors hover:text-black"
-            href="https://replicate.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Replicate
-          </a>{" "}
-          and{" "}
-          <a
-            className="font-semibold text-gray-600 transition-colors hover:text-black"
-            href="https://upstash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Upstash
-          </a>
+          .{" "}
+          <Link className="link font-semibold" href={links.terms()}>
+            {locales.terms_title()}
+          </Link>
           .
         </p>
       </div>

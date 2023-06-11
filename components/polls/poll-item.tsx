@@ -18,9 +18,11 @@ import { hasVotedForIt } from "@/lib/has-voted-for-it";
 export default function PollItem({
   item,
   votable,
+  rounded = true,
 }: {
   item: Poll;
   votable: boolean;
+  rounded?: boolean;
 }) {
   const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
@@ -103,7 +105,6 @@ export default function PollItem({
         className={piClass}
         onClick={(e) => onClickOption(e as never, option)}
       >
-        {/* <div className="absolute bottom-0 h-1/3 w-full bg-gradient-to-b from-transparent to-slate-900" /> */}
         {option.image?.url && (
           <Image
             src={option.image.url}
@@ -131,7 +132,7 @@ export default function PollItem({
   const h = <h2 className="p-title">{poll.title}</h2>;
 
   const content = (
-    <div className="p-body">
+    <div className={rounded ? "p-body" : "p-body not-rounded"}>
       <div className="flex h-full flex-col sm:flex-row">
         {(poll.options || []).map(optionItem)}
       </div>

@@ -14,9 +14,9 @@
   @apply m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800;
 }
 
-.pi.is-winner .pi-counter {
+/* .pi.is-winner .pi-counter {
   @apply text-gray-100 bg-gradient-to-r from-green-800 to-green-500;
-}
+} */
 
 .p.can-vote .pi-image {
   @apply grayscale;
@@ -44,6 +44,10 @@
 
 .p-body {
   @apply relative mx-auto mt-2 h-[480px] w-full overflow-hidden rounded-2xl border border-gray-200 bg-white sm:h-[320px];
+}
+
+.p-body.not-rounded {
+  @apply rounded-none;
 }
 
 .p.is-active .p-body {

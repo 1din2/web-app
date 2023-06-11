@@ -2,20 +2,21 @@ import Layout from "@/components/layout";
 import { MetaData } from "@/components/layout/meta";
 import PollList from "@/components/polls/poll-list";
 import apiClient from "@/lib/api/api-client";
-import { Poll, PollStatus, Tag } from "@/lib/api/types";
+import { Poll, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
-import links from "@/lib/links";
 import locales from "@/lib/locales";
 import { motion } from "framer-motion";
-import { GetStaticPropsContext } from "next";
-import { ParsedUrlQuery } from "querystring";
+import { GetServerSidePropsContext } from "next";
+import Balancer from "react-wrap-balancer";
 
-export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
-  const Items = <PollList list={polls} votable={false} />;
-  const title = locales.tag_page_title_format({ name: tag.name });
+type Props = {
+  polls: Poll[];
+};
+
+export default function DraftPage({ polls }: Props) {
+  const Items = <PollList list={polls} votable={true} />;
   const meta: MetaData = {
-    canonical: `${ROOT_URL}${links.tag(tag.slug)}`,
-    title,
+    canonical: ROOT_URL,
   };
 
   return (
@@ -35,51 +36,43 @@ export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
           },
         }}
       >
+        {Items}
+        <br />
         <motion.h1
           className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          {title}
+          <Balancer>{locales.title()}</Balancer>
         </motion.h1>
-        <br />
-        {Items}
+        <motion.p
+          className="mt-6 text-center text-gray-500 md:text-xl"
+          variants={FADE_DOWN_ANIMATION_VARIANTS}
+        >
+          <Balancer ratio={0.6}>{locales.description()}</Balancer>
+        </motion.p>
       </motion.div>
     </Layout>
   );
 }
 
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  res.setHeader(
+    "Cache-Control",
+    "private, s-maxage=10, stale-while-revalidate=59",
+  );
+  const client = apiClient(req.cookies.ut);
 
-interface Params extends ParsedUrlQuery {
-  slug: string;
-}
-
-export const getStaticProps = async (
-  context: GetStaticPropsContext & { params: Params },
-) => {
-  const { slug } = context.params;
-  const client = apiClient();
-  const [tag, polls] = await Promise.all([
-    client.tagBySlug({ slug }),
-    client.pollList({
-      status: [PollStatus.ACTIVE, PollStatus.ENDED],
-      limit: 5,
-      tag: slug,
-    }),
-  ]);
-
-  if (!tag) return { notFound: true, revalidate: 5 };
+  const polls = await client.pollList({
+    status: [PollStatus.DRAFT],
+    limit: 5,
+  });
 
   return {
     props: {
       polls,
-      tag,
     },
-    revalidate: 60,
   };
-};
+}

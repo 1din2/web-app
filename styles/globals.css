@@ -30,7 +30,7 @@
   @apply absolute bottom-2 right-2 h-10 w-10 opacity-20 transition-colors;
 }
 
-.pi.is-selected .pi-check,.p.can-vote:hover .pi-check {
+.pi.is-selected .pi-check,.p.can-vote .pi:hover .pi-check {
   @apply opacity-100;
 }
 

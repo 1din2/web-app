@@ -28,7 +28,6 @@ const LoginModal = ({
   setShowLoginModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   const onLogin = (event: any) => {
-    console.log(event);
     if (
       event.origin !== "http://localhost:42123" &&
       event.origin !== "https://api.1of2.net"

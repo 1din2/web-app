@@ -30,7 +30,7 @@ export default function SettingsPage() {
   const deleteMyData = () => {
     if (!currentUser) setShowLoginModal(true);
     if (currentUser) {
-      console.log("delete my data");
+      // console.log("delete my data");
     }
   };
 

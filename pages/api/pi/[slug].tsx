@@ -22,7 +22,7 @@ export default async function handler(req: NextRequest) {
   return new ImageResponse(
     (
       <div
-        tw="relative mx-auto mt-2 h-full w-full overflow-hidden"
+        tw="relative mx-auto h-full w-full overflow-hidden"
         style={{
           height: "100%",
           width: "100%",
@@ -35,30 +35,42 @@ export default async function handler(req: NextRequest) {
             "linear-gradient(to bottom right, #D1FAE5 25%, #EFF6FF 50%, #FFE4E6 75%)",
         }}
       >
-        <div tw="flex h-full flex-col">
-          {(poll.options || []).slice(0, 2).map((option, index) => (
-            <div
-              key={index}
-              tw="relative flex flex-1 flex-col items-center overflow-hidden p-4 first:border-b text-center"
-            >
-              {option.image?.url && (
-                <img
-                  src={option.image.url}
-                  alt={option.title}
-                  tw="object-cover absolute top-0 w-full h-full bottom-0 left-0 right-0 text-transparent"
+        <div tw="flex mx-auto h-full w-full overflow-hidden">
+          <div tw="flex flex-1 h-full">
+            {(poll.options || []).slice(0, 2).map((option, index) => (
+              <div
+                key={index}
+                tw="relative flex flex-1 flex-col items-center overflow-hidden text-center h-full"
+                style={{ borderRight: index === 0 ? "2px solid #ffffff" : "" }}
+              >
+                {option.image?.url && (
+                  <img
+                    src={option.image.url}
+                    alt={option.title}
+                    tw="absolute top-0 w-full h-full bottom-0 left-0 right-0 text-transparent"
+                  />
+                )}
+                <div
+                  tw="absolute flex top-0 left-0 right-0 h-1/2 w-full"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to bottom,#222222,transparent)",
+                  }}
                 />
-              )}
-              <div tw="absolute top-0 h-1/3 w-full bg-gradient-to-t from-transparent to-gray-800" />
-              <div tw="flex absolute top-0 w-full grow overflow-hidden bg-opacity-25 py-2 text-white">
-                <div tw="mb-1 text-lg font-semibold drop-shadow">
-                  {option.title}
-                </div>
-                <div tw="whitespace-nowrap text-xs text-gray-300">
-                  {option.description}
+                <div tw="flex flex-col items-center absolute top-0 w-full grow overflow-hidden bg-opacity-25 py-6 text-gray-300">
+                  <div
+                    tw="mb-1 text-4xl font-semibold"
+                    style={{ textShadow: "1px 1px 1px #000" }}
+                  >
+                    {option.title}
+                  </div>
+                  <div tw="text-lg text-gray-400">
+                    {option.description}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     ),
@@ -67,7 +79,7 @@ export default async function handler(req: NextRequest) {
       height: 630,
       fonts: [
         {
-          name: "SF Pro",
+          name: "BreeSerif",
           data: clashData,
         },
       ],

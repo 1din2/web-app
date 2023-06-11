@@ -18,11 +18,11 @@
   @apply text-gray-100 bg-gradient-to-r from-green-800 to-green-500;
 } */
 
-.p.can-vote .pi-image,.p.can-vote .pi:hover .pi-image {
+.p.can-vote .pi-image {
   @apply grayscale;
 }
 
-.pi.is-selected .pi-image {
+.pi.is-selected .pi-image,.p.can-vote .pi:hover .pi-image {
   @apply grayscale-0;
 }
 

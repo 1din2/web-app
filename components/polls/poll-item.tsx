@@ -133,7 +133,7 @@ export default function PollItem({
   };
 
   const h = (
-    <h2 className="p-2 text-center font-display text-3xl font-semibold sm:text-4xl sm:leading-[2.2rem]">
+    <h2 className="p-2 text-center font-display text-2xl font-semibold sm:text-3xl sm:leading-[2.2rem]">
       {poll.title}
     </h2>
   );

@@ -39,6 +39,7 @@ export default function TagPage({ polls, tag }: { polls: Poll[]; tag: Tag }) {
         >
           {locales.tag_page_title_format({ name: tag.name })}
         </motion.h1>
+        <br/>
         {Items}
       </motion.div>
     </Layout>

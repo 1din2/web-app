@@ -11,7 +11,8 @@
 }
 
 .pi-counter {
-  @apply m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800;
+  background-image: linear-gradient(to bottom right, #D1FAE5AA 25%, #EFF6FFAA 50%, #FFE4E6AA 75%);
+  @apply m-auto mb-1 inline-block rounded bg-white bg-opacity-75 px-4 py-0 text-lg font-semibold text-gray-800 shadow;
 }
 
 /* .pi.is-winner .pi-counter {
@@ -72,6 +73,12 @@
 
 .p-tags {
   @apply ml-4 mr-4 flex items-center rounded-b-2xl bg-gray-200 px-4;
+}
+
+.p-vs {
+  @apply absolute left-1/2 top-1/2 rounded-full px-5 py-4 text-xl font-bold text-gray-700 sm:text-2xl shadow;
+  background-image: linear-gradient(to bottom right, #D1FAE5 25%, #EFF6FF 50%, #FFE4E6 75%);
+  transform: translate(-50%, -50%);
 }
 
 .base-html h1 {

@@ -56,10 +56,7 @@ export default function PollItem({
     e.preventDefault();
     e.stopPropagation();
 
-    if (
-    
-      (poll.userVotes || []).find((it) => it.pollOptionId === option.id)
-    )
+    if ((poll.userVotes || []).find((it) => it.pollOptionId === option.id))
       return;
 
     if (currentUser) {
@@ -118,11 +115,9 @@ export default function PollItem({
           <div className="pi-title">{option.title}</div>
           <div className="pi-d">{option.description}</div>
         </div>
-        <div className="absolute bottom-2 grow-0">
+        <div className="absolute bottom-10 grow-0">
           <div className="pi-counter">{option.votesCount}</div>
         </div>
-        {/* <div className="group-[.can-vote]-hover:opacity-0 absolute top-0 h-full w-full bg-black opacity-0 transition-opacity group-[.can-vote]:cursor-pointer group-[.is-selected]:opacity-0" /> */}
-        {/* {voting && <LoadingDots color="text-sky-600" />} */}
         {canVote && <CheckCircle className="pi-check" />}
       </div>
     );
@@ -135,6 +130,7 @@ export default function PollItem({
       <div className="flex h-full flex-col sm:flex-row">
         {(poll.options || []).map(optionItem)}
       </div>
+      <div className="p-vs">VS</div>
     </div>
   );
 

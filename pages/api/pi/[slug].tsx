@@ -87,7 +87,7 @@ export default async function handler(req: NextRequest) {
               </div>
             </div>
             <div
-              tw="absolute py-4 px-5 rounded-full top-1/2 left-1/2 text-4xl font-bold"
+              tw="absolute py-4 px-5 rounded-full top-1/2 left-1/2 text-4xl font-bold drop-shadow"
               style={{
                 backgroundImage:
                   "linear-gradient(to bottom right, #D1FAE5 25%, #EFF6FF 50%, #FFE4E6 75%)",

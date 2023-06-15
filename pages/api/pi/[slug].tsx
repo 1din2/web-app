@@ -41,15 +41,16 @@ export default async function handler(req: NextRequest) {
               <div
                 key={index}
                 tw="relative flex flex-1 flex-col items-center overflow-hidden text-center h-full"
-                style={{ borderRight: index === 0 ? "2px solid #ffffff" : "" }}
+                style={{
+                  borderRight: index === 0 ? "2px solid #ffffff" : "",
+                  backgroundImage: `url(${option.image?.url})`,
+                  backgroundSize: "auto auto",
+                  backgroundPositionX: "center",
+                  backgroundPositionY: "center",
+                  backgroundRepeat: "no-repeat",
+                  border:"1px solid #ca0000"
+                }}
               >
-                {option.image?.url && (
-                  <img
-                    src={option.image.url}
-                    alt={option.title}
-                    tw="absolute top-0 w-full h-full bottom-0 left-0 right-0 text-transparent"
-                  />
-                )}
                 <div
                   tw="absolute flex top-0 left-0 right-0 h-1/2 w-full"
                   style={{
@@ -64,9 +65,7 @@ export default async function handler(req: NextRequest) {
                   >
                     {option.title}
                   </div>
-                  <div tw="text-lg text-gray-400">
-                    {option.description}
-                  </div>
+                  <div tw="text-lg text-gray-400">{option.description}</div>
                 </div>
               </div>
             ))}

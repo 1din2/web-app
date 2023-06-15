@@ -40,11 +40,12 @@ export default function PollItem({
           if (p) setPoll(p);
         });
     }
-    if (!currentUser) {
-      const d = getCurrentUser();
-      if (d && !currentUser) setCurrentUser(d);
-    }
   }, [currentUser, poll, item]);
+
+  if (!currentUser) {
+    const d = getCurrentUser();
+    if (d && !currentUser) setCurrentUser(d);
+  }
 
   const onClickOption = (e: Event, option?: PollOption) => {
     if (!isActive) return;

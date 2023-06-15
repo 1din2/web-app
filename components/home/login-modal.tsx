@@ -38,7 +38,11 @@ const LoginModal = ({
       saveCurrentUserToken(data.token);
     }
     setShowLoginModal(false);
-    newWindow.close();
+    try {
+      newWindow.close();
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
   useEffect(function mount() {

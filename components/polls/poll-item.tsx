@@ -3,12 +3,11 @@ import { Poll, PollOption, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import links from "@/lib/links";
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/current-user";
+import { CurrentUser, getCurrentUser } from "@/lib/current-user";
 import { useContext, useEffect, useState } from "react";
 import { LoginModalContext } from "../home/login-modal";
 import CheckCircle from "../shared/icons/check-circle";
 import apiClient from "@/lib/api/api-client";
-import { LoadingDots } from "../shared/icons";
 import Image from "next/image";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
 import { hasVotedForIt } from "@/lib/has-voted-for-it";
@@ -24,12 +23,14 @@ export default function PollItem({
   votable: boolean;
   rounded?: boolean;
 }) {
-  // const [voting, setVoting] = useState(false);
+  const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
   const { setShowLoginModal } = useContext(LoginModalContext);
   const { setShowShareModal } = useContext(ShareModalContext);
   useShareModal(`${ROOT_URL}/${links.poll(item.slug)}`, item.title);
-  const [currentUser, setCurrentUser] = useState(getCurrentUser());
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const isActive = votable && poll.status === PollStatus.ACTIVE;
+  const canVote = currentUser && isActive;
 
   useEffect(() => {
     if (currentUser && !poll.userVotes?.length && item === poll) {
@@ -39,28 +40,26 @@ export default function PollItem({
           if (p) setPoll(p);
         });
     }
+    if (!currentUser) {
+      const d = getCurrentUser();
+      if (d && !currentUser) setCurrentUser(d);
+    }
   }, [currentUser, poll, item]);
 
-  if (!currentUser) {
-    const d = getCurrentUser();
-    if (d) setCurrentUser(d);
-  }
-
-  const isActive = votable && poll.status === PollStatus.ACTIVE;
-  const canVote = currentUser && isActive;
-
-  const onClickOption = (e: Event, option: PollOption) => {
+  const onClickOption = (e: Event, option?: PollOption) => {
     if (!isActive) return;
     if (isActive && !currentUser) setShowLoginModal && setShowLoginModal(true);
 
     e.preventDefault();
     e.stopPropagation();
 
+    if (!option) return;
+
     if ((poll.userVotes || []).find((it) => it.pollOptionId === option.id))
       return;
 
     if (currentUser) {
-      // setVoting(true);
+      setVoting(true);
       apiClient()
         .vote({ pollOptionIds: [option.id] })
         .then((p) => {
@@ -71,7 +70,8 @@ export default function PollItem({
               hasVotedForIt(poll.id, true);
             }
           }, 1500);
-        });
+        })
+        .finally(() => setVoting(false));
     }
   };
 
@@ -118,7 +118,7 @@ export default function PollItem({
         <div className="absolute bottom-10 grow-0">
           <div className="pi-counter">{option.votesCount}</div>
         </div>
-        {canVote && <CheckCircle className="pi-check" />}
+        {!voting && <CheckCircle className="pi-check" />}
       </div>
     );
   };
@@ -130,7 +130,9 @@ export default function PollItem({
       <div className="flex h-full flex-col sm:flex-row">
         {(poll.options || []).map(optionItem)}
       </div>
-      <div className="p-vs">VS</div>
+      <div onClick={(e) => onClickOption(e as never)} className="p-vs">
+        VS
+      </div>
     </div>
   );
 

@@ -43,14 +43,16 @@ export default async function handler(req: NextRequest) {
                 tw="relative flex flex-1 flex-col items-center overflow-hidden text-center h-full"
                 style={{
                   borderRight: index === 0 ? "2px solid #ffffff" : "",
-                  backgroundImage: `url(${option.image?.url})`,
-                  backgroundSize: "auto auto",
-                  backgroundPositionX: "center",
-                  backgroundPositionY: "center",
-                  backgroundRepeat: "no-repeat",
-                  border:"1px solid #ca0000"
                 }}
               >
+                {option.image?.url && (
+                  <img
+                    src={option.image.url}
+                    alt={option.title}
+                    tw="absolute top-0 w-full h-full bottom-0 left-0 right-0 text-transparent object-cover"
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
                 <div
                   tw="absolute flex top-0 left-0 right-0 h-1/2 w-full"
                   style={{
@@ -69,6 +71,31 @@ export default async function handler(req: NextRequest) {
                 </div>
               </div>
             ))}
+            <div
+              tw="absolute flex bottom-0 left-0 right-0 h-1/2 w-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to bottom,transparent,#222222)",
+              }}
+            />
+            <div tw="flex flex-col items-center absolute bottom-0 w-full grow overflow-hidden bg-opacity-25 px-12 text-gray-300">
+              <div
+                tw="mb-12 text-4xl font-semibold"
+                style={{ textShadow: "1px 1px 1px #000" }}
+              >
+                {poll.title}
+              </div>
+            </div>
+            <div
+              tw="absolute py-4 px-5 rounded-full top-1/2 left-1/2 text-4xl font-bold"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to bottom right, #D1FAE5 25%, #EFF6FF 50%, #FFE4E6 75%)",
+                  transform: "translate(-50%, -50%)"
+              }}
+            >
+              VS
+            </div>
           </div>
         </div>
       </div>

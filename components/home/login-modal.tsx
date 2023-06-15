@@ -70,8 +70,9 @@ const LoginModal = ({
         ", top=" +
         top +
         ", left=" +
-        left;
-    newWindow = w.open(url, "", popParams);
+        left +
+        ", popup=true";
+    newWindow = w.open(url, "_blank", popParams);
 
     if (w.focus) {
       newWindow.focus();

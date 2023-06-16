@@ -1,5 +1,6 @@
 import { API_URL, PROJECT_ID, LANG } from "../constants";
 import { getCurrentUser } from "../current-user";
+import { getCurrentVoter } from "../current-voter";
 
 const apiFetcher = async <T>(
   query: string,
@@ -14,6 +15,7 @@ const apiFetcher = async <T>(
       "Accept-Language": LANG,
       Authorization: token ? `Bearer ${token}` : "",
       "x-project": PROJECT_ID,
+      "x-uid": getCurrentVoter() || "",
     },
     body: JSON.stringify({ query, variables }),
   });

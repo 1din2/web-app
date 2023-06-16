@@ -73,7 +73,10 @@ export default function Layout({
           <Link className="link font-semibold" href={links.terms()}>
             {locales.terms_title()}
           </Link>
-          .
+          .{" "}
+          <a className="link" onClick={() => setShowLoginModal(true)}>
+            Login
+          </a>
         </p>
       </div>
       <Script

@@ -3,7 +3,6 @@ import { Poll, PollOption, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import links from "@/lib/links";
 import Link from "next/link";
-import { CurrentUser, getCurrentUser } from "@/lib/current-user";
 import { useContext, useEffect, useState } from "react";
 import { LoginModalContext } from "../home/login-modal";
 import CheckCircle from "../shared/icons/check-circle";
@@ -11,6 +10,7 @@ import apiClient from "@/lib/api/api-client";
 import Image from "next/image";
 import { ShareModalContext, useShareModal } from "../home/share-modal";
 import { hasVotedForIt } from "@/lib/has-voted-for-it";
+import { getCurrentVoter } from "@/lib/current-voter";
 
 // const MAP_IDS: Record<string, string> = {};
 
@@ -28,28 +28,26 @@ export default function PollItem({
   const { setShowLoginModal } = useContext(LoginModalContext);
   const { setShowShareModal } = useContext(ShareModalContext);
   useShareModal(`${ROOT_URL}/${links.poll(item.slug)}`, item.title);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [currentVoter, setCurrentVoter] = useState<string | null>(null);
   const isActive = votable && poll.status === PollStatus.ACTIVE;
-  const canVote = currentUser && isActive;
+  const canVote = currentVoter && isActive;
 
   useEffect(() => {
-    if (currentUser && !poll.userVotes?.length && item === poll) {
+    if (currentVoter && !poll.userVotes?.length && item === poll) {
       apiClient()
         .pollBySlug({ slug: poll.slug })
         .then((p) => {
           if (p) setPoll(p);
         });
     }
-  }, [currentUser, poll, item]);
-
-  if (!currentUser) {
-    const d = getCurrentUser();
-    if (d && !currentUser) setCurrentUser(d);
-  }
+    if (!currentVoter) {
+      const d = getCurrentVoter();
+      if (d && !currentVoter) setCurrentVoter(d);
+    }
+  }, [currentVoter, poll, item]);
 
   const onClickOption = (e: Event, option?: PollOption) => {
     if (!isActive) return;
-    if (isActive && !currentUser) setShowLoginModal && setShowLoginModal(true);
 
     e.preventDefault();
     e.stopPropagation();
@@ -59,7 +57,7 @@ export default function PollItem({
     if ((poll.userVotes || []).find((it) => it.pollOptionId === option.id))
       return;
 
-    if (currentUser) {
+    if (currentVoter) {
       setVoting(true);
       apiClient()
         .vote({ pollOptionIds: [option.id] })
@@ -87,7 +85,7 @@ export default function PollItem({
       winnerOption.id === option.id;
 
     const isSelected =
-      currentUser &&
+      currentVoter &&
       !!(poll.userVotes || []).find((it) => it.pollOptionId === option.id);
 
     const piClass = [

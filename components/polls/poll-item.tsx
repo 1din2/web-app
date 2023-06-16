@@ -3,12 +3,11 @@ import { Poll, PollOption, PollStatus } from "@/lib/api/types";
 import { FADE_DOWN_ANIMATION_VARIANTS, ROOT_URL } from "@/lib/constants";
 import links from "@/lib/links";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { LoginModalContext } from "../home/login-modal";
+import { useEffect, useState } from "react";
 import CheckCircle from "../shared/icons/check-circle";
 import apiClient from "@/lib/api/api-client";
 import Image from "next/image";
-import { ShareModalContext, useShareModal } from "../home/share-modal";
+import { useShareModal } from "../home/share-modal";
 import { hasVotedForIt } from "@/lib/has-voted-for-it";
 import { getCurrentVoter } from "@/lib/current-voter";
 
@@ -25,9 +24,10 @@ export default function PollItem({
 }) {
   const [voting, setVoting] = useState(false);
   const [poll, setPoll] = useState(item);
-  const { setShowLoginModal } = useContext(LoginModalContext);
-  const { setShowShareModal } = useContext(ShareModalContext);
-  useShareModal(`${ROOT_URL}/${links.poll(item.slug)}`, item.title);
+  const { ShareModal, setShowShareModal } = useShareModal(
+    `${ROOT_URL}/${links.poll(item.slug)}`,
+    item.title,
+  );
   const [currentVoter, setCurrentVoter] = useState<string | null>(null);
   const isActive = votable && poll.status === PollStatus.ACTIVE;
   const canVote = currentVoter && isActive;
@@ -143,6 +143,7 @@ export default function PollItem({
 
   return (
     <motion.div className={pClass} variants={FADE_DOWN_ANIMATION_VARIANTS}>
+      {canVote && <ShareModal />}
       <Link className="link block w-full" href={links.poll(poll.slug)}>
         {h}
         {!isActive && content}
